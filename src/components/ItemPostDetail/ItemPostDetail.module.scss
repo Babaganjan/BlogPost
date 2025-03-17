@@ -1,0 +1,123 @@
+.post {
+  &__section {
+    padding: 26px 0 64px;
+  }
+  &__container {
+    padding: 16px 14px 24px 19px;
+    border-radius: 5px;
+    background: #fff;
+  }
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+  &__title_wrapper {
+    max-width: 450px;
+    display: flex;
+    gap: 13px;
+    margin-bottom: 4px;
+  }
+  &__title {
+    color: #1890ff;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 140%;
+  }
+  &__btn_favorited {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  &__like {
+    font-size: 16px;
+  }
+  &__tag_wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  &__tag {
+    padding: 3px 6px;
+    border-radius: 2px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    color: rgba(0, 0, 0, 0.5);
+    font-weight: 400;
+  }
+  &__desc {
+    max-width: 682px;
+    color: rgba(0, 0, 0, 0.75);
+    font-weight: 400;
+    line-height: 183.333%;
+  }
+  &__title,
+  &__tag,
+  &__desc {
+    overflow-wrap: break-word;
+    word-break: break-all;
+  }
+  &__username {
+    margin-bottom: 4px;
+    text-align: end;
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 18px;
+    line-height: 155.556%;
+    font-weight: 400;
+  }
+  &__date {
+    color: rgba(0, 0, 0, 0.5);
+    font-weight: 400;
+    line-height: 183.333%;
+  }
+  &__image {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  &__header_right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+}
+
+.articleBody {
+  width: 90%;
+  padding-top: 25px;
+}
+
+.wrapper_desc {
+  display: flex;
+  justify-content: space-between;
+}
+
+.wrapper_btns {
+  display: flex;
+  align-items: center;
+  flex-grow: 0;
+  gap: 12px;
+}
+
+.wrapper_btns .btn_option {
+  border: 1px solid #f5222d;
+  color: #f5222d;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 157.143%;
+}
+
+.wrapper_btns .btn_option:last-child {
+  border: 1px solid #52c41a;
+  color: #52c41a;
+}
+
+.spin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.post__like_favorited {
+  color: red;
+}

@@ -1,0 +1,21 @@
+.posts__container {
+  padding: 26px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.posts__list {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.spin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}

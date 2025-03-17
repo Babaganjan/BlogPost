@@ -1,0 +1,66 @@
+.header {
+  height: 80px;
+  background-color: #fff;
+}
+
+.header__container {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 22px;
+}
+
+.header__group_btn {
+  display: flex;
+  align-items: center;
+  gap: 19px;
+}
+
+.header__group_btn .header__sign_up {
+  padding: 6px 19px 10px;
+  border-radius: 5px;
+  border: 1px solid #52c41a;
+  color: #52c41a;
+}
+
+.create_article {
+  padding: 6px 10px;
+  border-radius: 5px;
+  border: 1px solid #52c41a;
+  color: #52c41a;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 157.143%;
+}
+
+.username_wrapper {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  cursor: pointer;
+}
+
+.user_username {
+  color: rgba(0, 0, 0, 0.85);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 155.556%;
+}
+
+.user_image {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.header__group_btn .log_out {
+  padding: 10px 18px;
+  color: rgba(0, 0, 0, 0.75);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 155.556%;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.75);
+}
