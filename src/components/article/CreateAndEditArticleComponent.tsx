@@ -2,19 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Input as AntInput, Spin } from 'antd';
 import {
-  useForm,
-  SubmitHandler,
-  Path,
-  FieldError,
-  Controller,
+  useForm, SubmitHandler, Path, FieldError, Controller,
 } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../redux/store/hooks';
 import {
-  articleSelector,
-  setLoadingArticle,
-  updateForm,
-  clearForm,
-  FormValues,
+  articleSelector, setLoadingArticle, updateForm, FormValues,
 } from '../../redux/slice/articleSlice';
 import fetchEditArticle from '../../api/article/fetchEditArticle';
 import fetchCreateArticle from '../../api/article/fetchCreateArticle';
@@ -63,9 +55,9 @@ interface CreateArticleComponentProps {
   isEditMode?: boolean;
 }
 
-const CreateAndEditArticleComponent: React.FC<CreateArticleComponentProps> = ({
-  isEditMode = false,
-}) => {
+const CreateAndEditArticleComponent: React.FC<CreateArticleComponentProps> = (
+  { isEditMode = false },
+) => {
   const dispatch = useAppDispatch();
   const { loading, form } = useAppSelector(articleSelector);
   const navigate = useNavigate();
@@ -96,17 +88,14 @@ const CreateAndEditArticleComponent: React.FC<CreateArticleComponentProps> = ({
     }
   }, [isEditMode, slug, dispatch, setValue]);
 
-  // Очистка данных при размонтировании (только для режима создания)
-  useEffect(
-    () => () => {
-      if (!isEditMode) {
-        dispatch(clearForm());
-        localStorage.removeItem('formData');
-        localStorage.removeItem('editForm');
-      }
-    },
-    [isEditMode, dispatch],
-  );
+  // Очистка данных при успешной отправке формы
+  useEffect(() => {
+    if (loading === 'fulfilled') {
+      localStorage.removeItem(isEditMode ? 'editForm' : 'formData');
+      navigate('/');
+      dispatch(setLoadingArticle('idle'));
+    }
+  }, [loading, navigate, dispatch, isEditMode]);
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     const articleData = {
@@ -118,50 +107,32 @@ const CreateAndEditArticleComponent: React.FC<CreateArticleComponentProps> = ({
       },
     };
     if (isEditMode && slug) {
-      dispatch(fetchEditArticle({ slug, articleData })).then(() => {
-        navigate('/');
-      });
+      dispatch(fetchEditArticle({ slug, articleData }));
     } else {
-      dispatch(fetchCreateArticle(articleData)).then(() => {
-        navigate('/');
-      });
+      dispatch(fetchCreateArticle(articleData));
     }
   };
 
-  const saveFormToLocalStorage = (
-    formData: FormValues & { tagList: string[] },
-  ) => {
-    localStorage.setItem('formData', JSON.stringify(formData));
+  const saveFormToLocalStorage = (formData: FormValues & { tagList: string[] }) => {
+    localStorage.setItem(isEditMode ? 'editForm' : 'formData', JSON.stringify(formData));
   };
 
   const handleTitleChange = (value: string) => {
-    const updatedForm = {
-      ...form,
-      title: value,
-      tagList: form.tagList ?? [],
-    };
+    const updatedForm = { ...form, title: value, tagList: tags };
     setValue('title', value);
     dispatch(updateForm(updatedForm));
     saveFormToLocalStorage(updatedForm);
   };
 
   const handleDescriptionChange = (value: string) => {
-    const updatedForm = {
-      ...form,
-      description: value,
-      tagList: form.tagList ?? [],
-    };
+    const updatedForm = { ...form, description: value, tagList: tags };
     setValue('description', value);
     dispatch(updateForm(updatedForm));
     saveFormToLocalStorage(updatedForm);
   };
 
   const handleBodyChange = (value: string) => {
-    const updatedForm = {
-      ...form,
-      body: value,
-      tagList: form.tagList ?? [],
-    };
+    const updatedForm = { ...form, body: value, tagList: tags };
     setValue('body', value);
     dispatch(updateForm(updatedForm));
     saveFormToLocalStorage(updatedForm);
@@ -191,13 +162,6 @@ const CreateAndEditArticleComponent: React.FC<CreateArticleComponentProps> = ({
     dispatch(updateForm(updatedForm));
     saveFormToLocalStorage(updatedForm);
   };
-
-  useEffect(() => {
-    if (loading === 'fulfilled') {
-      navigate('/');
-      dispatch(setLoadingArticle('idle'));
-    }
-  }, [loading, navigate, dispatch]);
 
   if (loading === 'pending') {
     return <Spin size="large" className={styles.spin} />;
@@ -257,8 +221,8 @@ const CreateAndEditArticleComponent: React.FC<CreateArticleComponentProps> = ({
               )}
             </label>
             <div className={styles.wrapper_addtag}>
-              <label className={styles.wrapper_inputs}>
-                Tags
+              <div className={styles.wrapper_inputs}>
+                 <span>Tags</span>
                 {tags.length === 0 ? (
                   <div className={styles.wrapper_addtag}>
                     <input
@@ -304,7 +268,7 @@ const CreateAndEditArticleComponent: React.FC<CreateArticleComponentProps> = ({
                     </div>
                   ))
                 )}
-              </label>
+              </div>
               <Button
                 className={styles.btn_tag}
                 onClick={addTag}

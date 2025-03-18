@@ -87,14 +87,6 @@ const articleSlice = createSlice({
     updateForm: (state, action: PayloadAction<Partial<FormValues>>) => {
       state.form = { ...state.form, ...action.payload };
     },
-    clearForm: (state) => {
-      state.form = {
-        title: '',
-        description: '',
-        body: '',
-        tagList: [''],
-      };
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -141,5 +133,5 @@ const articleSlice = createSlice({
 
 export const articleSelector = (state: RootState) => state.article;
 
-export const { setLoadingArticle, updateForm, clearForm } = articleSlice.actions;
+export const { setLoadingArticle, updateForm } = articleSlice.actions;
 export default articleSlice.reducer;
