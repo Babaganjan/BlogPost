@@ -117,23 +117,10 @@ const CreateAndEditArticleComponent: React.FC<CreateArticleComponentProps> = (
     localStorage.setItem(isEditMode ? 'editForm' : 'formData', JSON.stringify(formData));
   };
 
-  const handleTitleChange = (value: string) => {
-    const updatedForm = { ...form, title: value, tagList: tags };
-    setValue('title', value);
-    dispatch(updateForm(updatedForm));
-    saveFormToLocalStorage(updatedForm);
-  };
-
-  const handleDescriptionChange = (value: string) => {
-    const updatedForm = { ...form, description: value, tagList: tags };
-    setValue('description', value);
-    dispatch(updateForm(updatedForm));
-    saveFormToLocalStorage(updatedForm);
-  };
-
-  const handleBodyChange = (value: string) => {
-    const updatedForm = { ...form, body: value, tagList: tags };
-    setValue('body', value);
+  // Универсальная функция для обработки изменений
+  const handleChange = (value: string, key: keyof FormValues) => {
+    const updatedForm = { ...form, [key]: value, tagList: tags };
+    setValue(key, value);
     dispatch(updateForm(updatedForm));
     saveFormToLocalStorage(updatedForm);
   };
@@ -189,10 +176,7 @@ const CreateAndEditArticleComponent: React.FC<CreateArticleComponentProps> = (
                     | FieldError
                     | undefined
                 }
-                onChange={(e) => (input.name === 'title'
-                  ? handleTitleChange(e.target.value)
-                  : handleDescriptionChange(e.target.value))
-                }
+                onChange={(e) => handleChange(e.target.value, input.name as keyof FormValues)}
               />
             ))}
 
@@ -209,7 +193,7 @@ const CreateAndEditArticleComponent: React.FC<CreateArticleComponentProps> = (
                     style={{ height: 168, resize: 'none' }}
                     onChange={(e) => {
                       field.onChange(e);
-                      handleBodyChange(e.target.value);
+                      handleChange(e.target.value, 'body');
                     }}
                   />
                 )}
